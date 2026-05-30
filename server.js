@@ -7,21 +7,23 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo').default;
+const mongoSanitize = require('express-mongo-sanitize');
 const security = require('./utils/security');
 const dbConfig = require('./config/db');
 const validationMiddleware = require('./middleware/validation.middleware');
 const authMiddleware = require('./middleware/auth.middleware');
 const authController = require('./controllers/auth.controller');
 
-if (!process.env.MESSAGE_ENC_KEY && !process.env.SESSION_SECRET) {
-  console.warn('[SECURITY] MESSAGE_ENC_KEY or SESSION_SECRET is not configured. Message decryption will fail for encrypted messages.');
+if (!process.env.MESSAGE_ENC_KEY) {
+  console.warn('[SECURITY] MESSAGE_ENC_KEY is not configured. Message decryption will fail for encrypted messages.');
 }
 
 const app = express();
 
-const trustProxy = process.env.TRUST_PROXY?.toLowerCase() === 'true' || process.env.TRUST_PROXY === '1' || process.env.NODE_ENV === 'production';
-if (trustProxy) {
+// Only enable `trust proxy` when explicitly configured. Do not enable automatically for production.
+if (process.env.TRUST_PROXY && (process.env.TRUST_PROXY.toLowerCase() === 'true' || process.env.TRUST_PROXY === '1')) {
   app.set('trust proxy', 1);
+  console.log('[SECURITY] trust proxy enabled');
 }
 
 // ========== SECURITY MIDDLEWARE ==========
@@ -62,10 +64,12 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      fontSrc: ["'self'"],
+      // Allow some inline styles (or switch to nonces). Many libs use inline styles.
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://fonts.googleapis.com'],
       imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
+      // Allow connections to the configured frontends/backends and HTTPS origins
+      connectSrc: ["'self'", "https:", ...allowedOrigins],
       frameSrc: ["'none'"], // Prevent framing
       baseUri: ["'self'"],
       formAction: ["'self'"],
@@ -75,7 +79,6 @@ app.use(helmet({
   },
   frameguard: { action: 'deny' }, // Prevent clickjacking
   noSniff: true, // Prevent MIME type sniffing
-  xssFilter: true, // Enable XSS filter
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }, // Control referrer info
   hsts: { maxAge: 31536000, includeSubDomains: true, preload: true }, // HTTP Strict Transport Security
   permittedCrossDomainPolicies: { permittedPolicies: 'none' }, // Prevent cross-domain policies
@@ -114,43 +117,33 @@ app.use('/api', generalLimiter);
 app.use(express.json({ limit: '10kb' })); // Limit JSON payload
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// Custom NoSQL Injection Prevention Middleware (safe for Express 5.x)
-app.use((req, res, next) => {
-  // Check request body for NoSQL injection patterns
-  if (req.body && typeof req.body === 'object') {
-    try {
-      const bodyString = JSON.stringify(req.body);
-      
-      // Detect NoSQL operators ($ and .)
-      if (/\$[a-zA-Z_]/.test(bodyString) || /\"[^"]*\$[^"]*\"/.test(bodyString)) {
-        console.warn('[SECURITY] NoSQL operator detected in request body');
-        return res.status(400).json({ message: 'Невалідне значення в запиті' });
-      }
-    } catch (err) {
-      console.error('[ERROR] Request validation error:', err.message);
-    }
-  }
-  next();
-});
+// Use express-mongo-sanitize to remove any keys containing '$' or '.'.
+// This is more reliable than scanning raw JSON strings and avoids false positives.
+app.use(mongoSanitize());
 
 // Custom validation and sanitization middleware
 app.use(validationMiddleware.validateAndSanitize);
 
 // ========== SESSION MIDDLEWARE ==========
-const sessionSecret = process.env.SESSION_SECRET || (
-  process.env.NODE_ENV === 'production'
-    ? (() => { throw new Error('SESSION_SECRET is required in production'); })()
-    : 'dev_session_secret_12345'  // Allow default in development
-);
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET required');
+}
+const sessionSecret = process.env.SESSION_SECRET;
+
+const sessionStore = MongoStore.create({ 
+  mongoUrl: dbConfig.uri,
+  touchAfter: 24 * 3600, // lazy session update (in seconds)
+});
+
+sessionStore.on('error', err => {
+  console.error('[SESSION STORE ERROR]', err && err.message ? err.message : err);
+});
 
 app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ 
-    mongoUrl: dbConfig.uri,
-    touchAfter: 24 * 3600, // lazy session update (in seconds)
-  }),
+  store: sessionStore,
   cookie: {
     secure: process.env.NODE_ENV === 'production', // HTTPS only in production
     httpOnly: true,
@@ -202,7 +195,8 @@ app.get('/profile', authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'profile.html'));
 });
 
-app.get('/logout', authController.logout);
+// Logout should be a state-changing POST
+app.post('/logout', authController.logout);
 
 app.get('/404', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
@@ -226,8 +220,8 @@ const userRoutes = require('./routes/user.routes');
 const vacancyRoutes = require('./routes/vacancy.routes');
 
 app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/user', generalLimiter, userRoutes);
-app.use('/api/vacancies', generalLimiter, vacancyRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/vacancies', vacancyRoutes);
 
 // ========== ERROR HANDLING MIDDLEWARE ==========
 
@@ -245,7 +239,9 @@ app.use((req, res) => {
 
 // Global error handler - prevent information leakage
 app.use((err, req, res, next) => {
-  console.error('[ERROR]', err.message, err.stack);
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  console.error('[ERROR]', err.message);
+  if (isDevelopment && err.stack) console.error(err.stack);
 
   // Don't expose internal error details to client
   const status = err.status || err.statusCode || 500;
@@ -268,14 +264,15 @@ app.use((err, req, res, next) => {
 
 // Connect to MongoDB
 mongoose.connect(dbConfig.uri)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => {
+    console.log('MongoDB connected');
+    const PORT = process.env.PORT || 3000;
+    const HOST = process.env.HOST || '0.0.0.0';
+    app.listen(PORT, HOST, () => {
+      console.log(`Server running on http://${HOST}:${PORT}`);
+    });
+  })
   .catch(err => {
     console.error('MongoDB connection error:', err);
     process.exit(1);
   });
-
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || '0.0.0.0';
-app.listen(PORT, HOST, () => {
-  console.log(`Server running on http://${HOST}:${PORT}`);
-});
