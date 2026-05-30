@@ -7,7 +7,6 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo').default;
-const mongoSanitize = require('express-mongo-sanitize');
 const security = require('./utils/security');
 const dbConfig = require('./config/db');
 const validationMiddleware = require('./middleware/validation.middleware');
@@ -119,7 +118,37 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Use express-mongo-sanitize to remove any keys containing '$' or '.'.
 // This is more reliable than scanning raw JSON strings and avoids false positives.
-app.use(mongoSanitize());
+// Custom in-place sanitizer: remove keys beginning with '$' or containing '.' from objects.
+function sanitizeObject(obj) {
+  if (!obj || typeof obj !== 'object') return;
+
+  if (Array.isArray(obj)) {
+    for (const item of obj) sanitizeObject(item);
+    return;
+  }
+
+  for (const key of Object.keys(obj)) {
+    if (key.startsWith('$') || key.includes('.')) {
+      delete obj[key];
+      continue;
+    }
+
+    const val = obj[key];
+    if (val && typeof val === 'object') sanitizeObject(val);
+  }
+}
+
+app.use((req, res, next) => {
+  try {
+    if (req.body && typeof req.body === 'object') sanitizeObject(req.body);
+    if (req.params && typeof req.params === 'object') sanitizeObject(req.params);
+    // mutate req.query in-place rather than reassigning it to avoid getter-only errors
+    if (req.query && typeof req.query === 'object') sanitizeObject(req.query);
+  } catch (err) {
+    console.error('[SANITIZE ERROR]', err && err.message ? err.message : err);
+  }
+  next();
+});
 
 // Custom validation and sanitization middleware
 app.use(validationMiddleware.validateAndSanitize);
