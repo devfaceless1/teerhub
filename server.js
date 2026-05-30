@@ -245,7 +245,6 @@ app.use((err, req, res, next) => {
 
   // Don't expose internal error details to client
   const status = err.status || err.statusCode || 500;
-  const isDevelopment = process.env.NODE_ENV === 'development';
 
   const response = {
     message: status === 500 
