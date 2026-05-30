@@ -43,7 +43,6 @@ const clearFiltersBtnModal = document.getElementById("clearFiltersBtnModal");
 const applyFiltersBtn = document.getElementById("applyFiltersBtn");
 const filterModalBackdrop = document.querySelector("[data-close-filter-modal]");
 const logoutBtn = document.getElementById("logoutBtn");
-const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
 
 let selectedMessageRecipientId = null;
 let messageModal = null;
@@ -68,7 +67,13 @@ let activeFilters = {
   saved: false,
 };
 
-const tagButtons = Array.from(document.querySelectorAll('.tag-btn'));
+function getFilterButtons() {
+  return Array.from(document.querySelectorAll('.filter-chip'));
+}
+
+function getTagButtons() {
+  return Array.from(document.querySelectorAll('.tag-btn'));
+}
 
 // =========================
 // LOAD JOBS FROM API
@@ -255,7 +260,7 @@ function setActiveTag(tag) {
     appliedFilter = tag;
   }
 
-  tagButtons.forEach((btn) => {
+  getTagButtons().forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.tag === appliedFilter);
   });
 
@@ -267,8 +272,9 @@ function setActiveTag(tag) {
 }
 
 function setActiveFilter(filter) {
+  if (!filter) return;
   activeFilters[filter] = !activeFilters[filter];
-  filterButtons.forEach((btn) => {
+  getFilterButtons().forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.filter && activeFilters[btn.dataset.filter]);
   });
   filterJobs();
@@ -281,8 +287,8 @@ function resetFilters() {
   activeFilters = { remote: false, recent: false, saved: false };
   searchInput.value = '';
   locationInput.value = '';
-  tagButtons.forEach((btn) => btn.classList.remove('active'));
-  filterButtons.forEach((btn) => btn.classList.remove('active'));
+  getTagButtons().forEach((btn) => btn.classList.remove('active'));
+  getFilterButtons().forEach((btn) => btn.classList.remove('active'));
   filterJobs();
 }
 
@@ -481,19 +487,6 @@ locationInput?.addEventListener("input", () => {
   filterJobs();
 });
 
-filterButtons.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const filter = btn.dataset.filter;
-    setActiveFilter(filter);
-  });
-});
-
-tagButtons.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const tag = btn.dataset.tag || btn.textContent.trim();
-    setActiveTag(tag);
-  });
-});
 // =========================
 // LOGOUT
 // =========================
