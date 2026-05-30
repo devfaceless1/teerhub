@@ -278,7 +278,7 @@ function resetFilters() {
   currentQuery = '';
   currentLocation = '';
   appliedFilter = '';
-  activeFilters = { remote: false, recent: false };
+  activeFilters = { remote: false, recent: false, saved: false };
   searchInput.value = '';
   locationInput.value = '';
   tagButtons.forEach((btn) => btn.classList.remove('active'));
