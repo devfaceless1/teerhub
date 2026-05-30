@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>TeerHub Dashboard</title>
+
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/dashboard.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="dashboard-page">
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="container header-container">
+
+    <a href="/dashboard" class="logo">
+      TeerHub
+    </a>
+
+    <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="nav">
+      <a href="#jobs-section">Вакансії</a>
+      <a href="/chat">Повідомлення</a>
+    </nav>
+    
+
+    <div class="header-actions">
+      <a href="/settings">Кабінет</a>
+
+    </div>
+
+    
+
+  </div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="container hero-container">
+
+    <div class="hero-content">
+
+      <span class="hero-badge">
+        Волонтерська платформа України
+      </span>
+
+      <h1>
+        Знайди волонтерську можливість,
+        яка дійсно має значення
+      </h1>
+
+      <p>
+        TeerHub допомагає волонтерам знаходити
+        перевірені організації та важливі проєкти.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- RECOMMENDED -->
+
+<section id="jobs-section" class="jobs-section">
+
+  <div class="container">
+
+    <div class="jobs-block">
+      <form id="searchForm" class="search-panel search-panel--block">
+        <div class="search-fields">
+          <label class="field">
+            <span>Що ви шукаєте?</span>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Наприклад: соціальна робота, IT, логістика"
+            >
+          </label>
+        </div>
+
+        <div class="search-actions">
+          <button type="submit" id="searchBtn" class="primary-btn">
+            Знайти вакансію
+          </button>
+          <button type="button" id="openFiltersBtn" class="secondary-btn filter-toggle-btn">
+            Фільтри
+          </button>
+          <button type="button" id="clearFiltersBtn" class="secondary-btn">
+            Скинути всі фільтри
+          </button>
+        </div>
+      </form>
+
+      <div class="jobs-layout">
+
+        <aside class="jobs-sidebar">
+          <div class="sidebar-panel">
+            <div class="sidebar-header">
+              <h2>Фільтри</h2>
+              <p>Звузьте пошук за місцем, тегами та типом.</p>
+            </div>
+
+            <div class="results-summary-panel">
+              <h3>Результати</h3>
+              <p id="resultCount">Пошук показує всі актуальні вакансії</p>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Тип роботи</h4>
+              <button class="filter-chip" data-filter="remote">Віддалена</button>
+              <button class="filter-chip" data-filter="recent">Останні 7 днів</button>
+              <button class="filter-chip" data-filter="saved">Збережені</button>
+            </div>
+
+            <div class="sidebar-section">
+              <h4>Популярні теги</h4>
+              <div class="quick-tags sidebar-tags">
+                <button class="tag-btn" data-tag="IT">IT</button>
+                <button class="tag-btn" data-tag="Освіта">Освіта</button>
+                <button class="tag-btn" data-tag="Медицина">Медицина</button>
+                <button class="tag-btn" data-tag="Логістика">Логістика</button>
+                <button class="tag-btn" data-tag="Психологія">Психологія</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="jobs-main">
+          <div class="section-heading">
+            <h2>Актуальні вакансії</h2>
+          </div>
+
+          <div class="jobs-grid" id="jobsGrid"></div>
+        </main>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<script src="/scripts/session.js"></script>
+<script src="/scripts/dashboard.js"></script>
+<div id="filterModal" class="filter-modal" aria-hidden="true">
+  <div class="filter-modal-backdrop" data-close-filter-modal></div>
+  <div class="filter-modal-panel" role="dialog" aria-modal="true" aria-labelledby="filterModalTitle">
+    <button id="filterModalClose" class="filter-modal-close" type="button" aria-label="Закрити фільтри">&times;</button>
+    <div class="filter-modal-header">
+      <h2 id="filterModalTitle">Фільтри</h2>
+      <p>Швидко оберіть тип роботи або тег.</p>
+    </div>
+    <div class="filter-modal-content">
+      <div class="sidebar-section">
+        <h4>Тип роботи</h4>
+        <button class="filter-chip" data-filter="remote">Віддалена</button>
+        <button class="filter-chip" data-filter="recent">Останні 7 днів</button>
+        <button class="filter-chip" data-filter="saved">Збережені</button>
+      </div>
+      <div class="sidebar-section">
+        <h4>Популярні теги</h4>
+        <div class="quick-tags sidebar-tags">
+          <button class="tag-btn" data-tag="IT">IT</button>
+          <button class="tag-btn" data-tag="Освіта">Освіта</button>
+          <button class="tag-btn" data-tag="Медицина">Медицина</button>
+          <button class="tag-btn" data-tag="Логістика">Логістика</button>
+          <button class="tag-btn" data-tag="Психологія">Психологія</button>
+        </div>
+      </div>
+    </div>
+    <div class="filter-modal-actions">
+      <button type="button" id="applyFiltersBtn" class="primary-btn">Застосувати</button>
+      <button type="button" class="secondary-btn" id="clearFiltersBtnModal">Скинути</button>
+    </div>
+  </div>
+</div>
+<div id="messageModal" class="filter-modal" aria-hidden="true">
+  <div class="filter-modal-backdrop" data-close-message-modal></div>
+  <div class="filter-modal-panel" role="dialog" aria-modal="true" aria-labelledby="messageModalTitle">
+    <button id="messageModalClose" class="filter-modal-close" type="button" aria-label="Закрити">&times;</button>
+    <div class="filter-modal-header">
+      <h2 id="messageModalTitle">Написати повідомлення</h2>
+      <p>Відправте запит безпосередньо автору вакансії.</p>
+    </div>
+    <form id="messageForm" class="message-form">
+      <textarea id="messageBody" placeholder="Ваше повідомлення" rows="6" required></textarea>
+      <div id="messageFormMessage" class="form-message"></div>
+      <div class="message-modal-actions">
+        <button type="submit" class="primary-btn">Надіслати</button>
+        <button type="button" class="secondary-btn" id="cancelMessageBtn">Скасувати</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+  <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+  <nav class="mobile-nav">
+    <a href="#jobs-section">Вакансії</a>
+    <a href="/chat">Повідомлення</a>
+    <a href="/settings">Кабінет</a>
+  </nav>
+</div>
+<script src="/scripts/header-menu.js"></script>
+
+</body>
+</html>

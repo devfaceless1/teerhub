@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Особистий кабінет | TeerHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800&family=Cormorant+Infant:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/settings.css">
+</head>
+<body class="settings-page">
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="container header-container">
+
+    <a href="/dashboard" class="logo">
+      TeerHub
+    </a>
+
+    <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="nav">
+      <a href="/dashboard#jobs-section">Вакансії</a>
+      <a href="/chat">Повідомлення</a>
+    </nav>
+
+    <div class="header-actions">
+
+      <a href="/logout" id="logoutBtn" class="logout-btn">
+        Вийти
+      </a>
+    
+
+  </div>
+
+</header>
+<main>
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="hero-copy">
+        <span class="eyebrow">Особистий кабінет</span>
+        <h1>Ваш кабінет волонтера у сучасному вигляді</h1>
+        <p>Тут ви можете зручно переглядати профіль, отримувати повідомлення та створювати вакансії з красивим інтерфейсом.</p>
+      </div>
+      <div class="hero-card">
+        <p class="hero-card-label">У цьому розділі</p>
+        <ul class="hero-card-list">
+          <li>Інформація про профіль</li>
+          <li>Свіжі повідомлення</li>
+          <li>Покрокове створення вакансій</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="dashboard-shell">
+    <div class="container dashboard-grid">
+      <div class="panel profile-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Профіль</p>
+            <h2>Ваші дані</h2>
+          </div>
+        </div>
+        <div class="profile-details">
+          <div class="detail-row">
+            <button id="editNameBtn" class="icon-btn action-btn" aria-label="Редагувати ім'я">
+              <svg viewBox="0 0 24 24" class="icon icon-edit" aria-hidden="true">
+                <path d="M4 20h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M14.7 5.3l4 4L9 19.94H5.06V16L14.7 5.3Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+            </button>
+            <div class="detail-content">
+              <span>Ім’я</span>
+              <strong id="profileName">–</strong>
+            </div>
+          </div>
+          <div class="detail-row email-row">
+            <button id="toggleEmailBtn" class="icon-btn action-btn email-toggle-btn" aria-label="Приховати email від інших користувачів">
+              <svg viewBox="0 0 24 24" class="icon icon-eye" aria-hidden="true">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+              </svg>
+            </button>
+            <div class="detail-content">
+              <div class="detail-label-row">
+                <span>Email</span>
+                <span class="status-chip" id="emailStatusLabel">Публічно приховано</span>
+              </div>
+              <strong id="profileEmail">–</strong>
+              <p class="detail-hint">Ця кнопка приховує ваш email від усіх інших користувачів у загальних профілях.</p>
+            </div>
+          </div>
+          <div class="detail-row"><span>Дата реєстрації</span><strong id="profileCreatedAt">–</strong></div>
+          <div class="detail-row"><span>Роль</span><strong><span class="badge badge-role" id="roleBadge">Волонтер</span></strong></div>
+        </div>
+        <div id="settingsActions" style="margin-top:14px;display:none;align-items:center;gap:8px">
+          <button id="saveSettingsBtn" class="btn btn-primary">Зберегти зміни</button>
+          <button id="discardSettingsBtn" class="btn btn-secondary">Відхилити</button>
+          <div id="settingsSaveMsg" style="font-size:13px;color:var(--muted);display:none;margin-left:8px"></div>
+        </div>
+      </div>
+      
+      <div class="panel vacancies-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Збережені</p>
+            <h2>Збережені вакансії</h2>
+          </div>
+        </div>
+        <p class="panel-note">Вакансії, які ви зберегли для пізнішого перегляду.</p>
+        <div class="vacancies-list" id="savedList">
+          <p class="empty-state">Немає збережених вакансій.</p>
+        </div>
+      </div>
+      <div class="panel vacancies-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Вакансії</p>
+            <h2>Ваші оголошення</h2>
+          </div>
+          <button id="openVacancyModalBtn" class="btn btn-secondary">Додати вакансію</button>
+        </div>
+        <p class="panel-note">Створюйте вакансії в дві стадії з описом, контактами та тегами.</p>
+        <div class="vacancies-list" id="vacanciesList">
+          <p class="empty-state">Тут з’являться ваші вакансії після додавання.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="modal-overlay hidden" id="vacancyModal" aria-hidden="true">
+  <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="vacancyModalTitle">
+    <button type="button" class="modal-close" id="closeVacancyModalBtn" aria-label="Закрити">✕</button>
+    <div class="modal-header">
+      <span class="eyebrow">Нова вакансія</span>
+      <h2 id="vacancyModalTitle">Крок 1 з 2</h2>
+      <p id="vacancyStepDescription">Заповніть назву, опис і контактні дані, щоб волонтери могли швидко знайти та зв’язатися.</p>
+      <div class="step-indicator">
+        <span class="step-pill active" data-step="1">1</span>
+        <span class="step-pill" data-step="2">2</span>
+      </div>
+    </div>
+    <form id="vacancyWizard" class="vacancy-form">
+      <div class="wizard-step" data-step="1">
+        <label class="field">
+          <span>Назва вакансії</span>
+          <input name="title" type="text" placeholder="Наприклад: координатор волонтерської команди" required />
+        </label>
+        <div class="form-row">
+          <label class="field half-width">
+            <span>Локація</span>
+            <input name="location" type="text" placeholder="Місто, область або онлайн" />
+          </label>
+          <label class="field half-width">
+            <span>Контактна особа</span>
+            <input name="contactName" type="text" placeholder="Ім’я та прізвище" />
+          </label>
+        </div>
+        <label class="field full-width">
+          <span>Опис вакансії</span>
+          <textarea name="description" placeholder="Опишіть обов’язки, формат роботи та очікуваний результат" required></textarea>
+        </label>
+        <div class="form-row">
+          <label class="field half-width">
+            <span>Email для зв’язку</span>
+            <input name="contactEmail" type="email" placeholder="E-mail для зв’язку з вами" />
+          </label>
+          <label class="field half-width">
+            <span>Телефон (опційно)</span>
+            <input name="contactPhone" type="tel" placeholder="Наприклад: +380671234567" />
+          </label>
+        </div>
+      </div>
+      <div class="wizard-step hidden" data-step="2">
+        <div class="tag-section">
+          <p class="tag-section-label">Популярні теги</p>
+          <div class="tag-grid" id="popularTags">
+            <button type="button" class="tag-chip" data-tag="IT">IT</button>
+            <button type="button" class="tag-chip" data-tag="Логістика">Логістика</button>
+            <button type="button" class="tag-chip" data-tag="Освіта">Освіта</button>
+            <button type="button" class="tag-chip" data-tag="Медицина">Медицина</button>
+            <button type="button" class="tag-chip" data-tag="Психологія">Психологія</button>
+            <button type="button" class="tag-chip" data-tag="Соціальна підтримка">Соціальна підтримка</button>
+          </div>
+        </div>
+        <div class="tag-section">
+          <p class="tag-section-label">Додати свій тег</p>
+          <div class="tag-input-row">
+            <input id="customTagInput" type="text" placeholder="Наприклад: підтримка дітей" />
+            <button type="button" id="addCustomTagBtn" class="btn btn-secondary">Додати</button>
+          </div>
+          <p class="hint">Оберіть до 3 тегів, щоб ваше оголошення краще відображалося у пошуку.</p>
+        </div>
+        <div class="selected-tags-panel">
+          <p class="tag-section-label">Вибрані теги</p>
+          <div class="selected-tags" id="selectedTagsContainer"></div>
+        </div>
+      </div>
+      <p class="form-error hidden" id="vacancyError"></p>
+      <div class="wizard-actions">
+        <button type="button" id="wizardBackBtn" class="btn btn-secondary hidden">Назад</button>
+        <button type="button" id="wizardNextBtn" class="btn btn-primary">Продовжити</button>
+        <button type="submit" id="wizardSubmitBtn" class="btn btn-primary hidden">Опублікувати вакансію</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Confirmation modal -->
+<div class="modal-overlay hidden" id="confirmModal" aria-hidden="true">
+  <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-header">
+      <h2 id="confirmTitle">Підтвердження</h2>
+    </div>
+    <div class="modal-body">
+      <p id="confirmMessage">Ви впевнені?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" id="confirmCancelBtn">Скасувати</button>
+      <button type="button" class="btn btn-primary" id="confirmOkBtn">Підтвердити</button>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container footer-container">
+    <p>TeerHub — безпечний простір для волонтерів та організацій.</p>
+  </div>
+</footer>
+<script src="/scripts/session.js"></script>
+<script src="/scripts/settings.js"></script>
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+  <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+  <nav class="mobile-nav">
+    <a href="/dashboard#jobs-section">Вакансії</a>
+    <a href="/chat">Повідомлення</a>
+  </nav>
+  <a href="/logout" id="mobileLogoutBtn" class="logout-btn">Вийти</a>
+</div>
+<script src="/scripts/header-menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,689 @@
+/* =========================
+   TEERHUB AUTH
+========================= */
+
+:root{
+    --green:#16a34a;
+    --green-dark:#15803d;
+
+    --bg:#eaf7ee;
+
+    --card:rgba(255,255,255,.94);
+
+    --border:#dcfce7;
+
+    --text:#14532d;
+
+    --muted:#6b7280;
+}
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
+body,
+input,
+button,
+textarea,
+select{
+    font-family:"Google Sans",sans-serif;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+body.auth-page{
+    margin:0;
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f3fff6 0%,
+            #eaf7ee 100%
+        );
+}
+
+/* =========================
+   CARD
+========================= */
+
+.auth-card{
+    width:100%;
+    max-width:460px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:32px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.08);
+
+    backdrop-filter:blur(10px);
+
+    animation:fadeIn .35s ease;
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.auth-card h2{
+    font-family:"Cormorant Infant",serif;
+
+    font-size:36px;
+
+    text-align:center;
+
+    margin:0 0 24px;
+
+    color:var(--text);
+}
+
+.auth-card h3{
+    margin:0 0 8px;
+
+    font-size:18px;
+
+    color:var(--text);
+}
+
+.hint{
+    margin:0 0 18px;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    color:var(--muted);
+}
+
+/* =========================
+   STEP INDICATOR
+========================= */
+
+.step-indicator{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+
+    margin-bottom:24px;
+}
+
+.step{
+    min-height:72px;
+
+    padding:10px;
+
+    border-radius:18px;
+
+    background:#e5f7ea;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:5px;
+
+    transition:.25s ease;
+
+    text-align:center;
+
+    color:var(--text);
+}
+
+.step-number{
+    width:32px;
+    height:32px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    background:white;
+
+    color:var(--text);
+
+    font-weight:700;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.05);
+}
+
+.step-text{
+    font-size:11px;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:#4b5563;
+}
+
+.step.active{
+    background:var(--green);
+
+    color:white;
+}
+
+.step.active .step-number{
+    color:var(--green);
+}
+
+.step.active .step-text{
+    color:white;
+}
+
+/* =========================
+   STEP PAGES
+========================= */
+
+.step-page{
+    display:none;
+}
+
+.step-page.active{
+    display:block;
+
+    animation:fadeIn .3s ease;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.auth-card form{
+    display:flex;
+    flex-direction:column;
+
+    gap:14px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select{
+    width:100%;
+
+    padding:13px 14px;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    background:#f9fdf9;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#9ca3af;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--green);
+
+    background:white;
+
+    box-shadow:
+        0 0 0 4px rgba(22,163,74,.12);
+}
+
+textarea{
+    resize:none;
+
+    min-height:100px;
+}
+
+/* =========================
+   ROLE LABELS
+========================= */
+
+.step-page label{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    background:#f9fdf9;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.step-page label:hover{
+    transform:translateY(-2px);
+
+    background:#f0fdf4;
+
+    border-color:#b7f0c9;
+}
+
+.step-page label input{
+    width:auto;
+
+    margin:0;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+    padding:13px 14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:14px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+/* PRIMARY */
+
+button[type="submit"],
+#roleNextBtn,
+#goLoginBtn{
+    width:100%;
+
+    background:var(--green);
+
+    color:white;
+}
+
+button[type="submit"]:hover,
+#roleNextBtn:hover,
+#goLoginBtn:hover{
+    background:var(--green-dark);
+}
+
+/* SECONDARY */
+
+.step-back{
+    background:#f3f4f6;
+
+    color:#111827;
+}
+
+.step-back:hover{
+    background:#e5e7eb;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.action-row{
+    display:flex;
+
+    gap:12px;
+
+    margin-top:4px;
+}
+
+.action-row .step-back{
+    width:140px;
+
+    flex-shrink:0;
+}
+
+.action-row button[type="submit"]{
+    flex:1;
+}
+
+.password-guidance{
+    padding:18px 16px 14px;
+    border-radius:18px;
+    background:#f6fdf6;
+    border:1px solid #d9f7dd;
+    margin-bottom:12px;
+}
+
+.password-hint{
+    margin:0 0 10px;
+    color:#14532d;
+    font-weight:700;
+    font-size:13px;
+}
+
+.password-requirements{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:grid;
+    gap:10px;
+}
+
+.password-requirements li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:14px;
+    background:#ffffff;
+    color:#475569;
+    font-size:13px;
+    border:1px solid transparent;
+    transition:background .2s ease,border-color .2s ease,color .2s ease;
+}
+
+.password-requirements li span{
+    width:18px;
+    height:18px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    border:1px solid #d1d5db;
+    color:#9ca3af;
+    font-size:12px;
+}
+
+.password-requirements li.valid{
+    background:#ecfdf5;
+    border-color:#86efac;
+    color:#166534;
+}
+
+.password-requirements li.valid span{
+    border-color:#16a34a;
+    background:#16a34a;
+    color:white;
+}
+
+.password-requirements li.invalid{
+    background:#fff5f5;
+    border-color:#fecaca;
+    color:#991b1b;
+}
+
+.password-requirements li.invalid span{
+    border-color:#ef4444;
+    background:#fee2e2;
+    color:#ef4444;
+}
+
+.confirm-feedback{
+    margin:-8px 0 12px;
+    font-size:13px;
+    min-height:20px;
+    color:#475569;
+}
+
+.confirm-feedback.valid{
+    color:#166534;
+}
+
+.confirm-feedback.invalid{
+    color:#b91c1c;
+}
+
+button[disabled],
+button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none;
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+.success-card{
+    margin:14px 0;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:#ecfdf5;
+
+    border:1px solid #bbf7d0;
+
+    color:#065f46;
+}
+
+/* =========================
+   LINK
+========================= */
+
+.auth-link{
+    margin-top:20px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:var(--muted);
+}
+
+.auth-link a{
+    color:var(--green);
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.auth-link a:hover{
+    text-decoration:underline;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast-container{
+    position:fixed;
+
+    top:20px;
+    right:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:12px;
+
+    z-index:9999;
+
+    pointer-events:none;
+}
+
+.toast{
+    min-width:300px;
+    max-width:380px;
+
+    padding:14px 18px;
+
+    border-radius:18px;
+
+    color:white;
+
+    background:rgba(22,163,74,.96);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    box-shadow:
+        0 24px 50px rgba(15,23,42,.18);
+
+    opacity:0;
+
+    transform:translateX(16px) scale(0.98);
+
+    animation:toastIn .32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+    pointer-events:auto;
+    will-change:transform, opacity;
+}
+
+.toast.hide{
+    animation:toastOut .28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.toast--error{
+    background:#ef4444;
+}
+
+.toast--success{
+    background:#16a34a;
+}
+
+.toast__title{
+    font-weight:700;
+
+    margin-bottom:6px;
+}
+
+.toast__message{
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes toastIn{
+    from{
+        opacity:0;
+        transform:translateX(18px) scale(0.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0) scale(1);
+    }
+}
+
+@keyframes toastOut{
+    from{
+        opacity:1;
+        transform:translateX(0) scale(1);
+    }
+
+    to{
+        opacity:0;
+        transform:translateX(20px) scale(0.96);
+    }
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        transform:translateX(18px);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:480px){
+
+    body.auth-page{
+        padding:20px 12px;
+    }
+
+    .auth-card{
+        padding:24px;
+
+        border-radius:20px;
+    }
+
+    .auth-card h2{
+        font-size:30px;
+    }
+
+    .step{
+        min-height:64px;
+
+        padding:8px;
+    }
+
+    .step-text{
+        font-size:10px;
+    }
+
+    .toast{
+        width:calc(100vw - 32px);
+
+        min-width:auto;
+    }
+
+    .action-row{
+        flex-direction:column;
+    }
+
+    .action-row .step-back{
+        width:100%;
+    }
+
+    button{
+        width:100%;
+    }
+}

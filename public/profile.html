@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>TeerHub — Профіль</title>
+
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/dashboard.css">
+  <link rel="stylesheet" href="/styles/profile.css">
+
+</head>
+
+<body class="dashboard-page">
+
+<header class="header">
+  <div class="container header-container">
+    <a href="/dashboard" class="logo">TeerHub</a>
+    <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+    <nav class="nav">
+      <a href="/dashboard#jobs-section">Вакансії</a>
+      <a href="/chat">Повідомлення</a>
+    </nav>
+    <div class="header-actions">
+      <a href="/settings">Кабінет</a>
+    </div>
+    
+    </div>
+  </div>
+</header>
+
+<main class="container" style="padding:40px 20px;">
+  <div class="profile-block">
+    <aside class="profile-sidebar">
+      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-name" id="profileName">Профіль</div>
+
+      <div class="profile-details">
+        <div class="detail-row">
+          <div class="label">Email</div>
+          <div class="value" id="profileEmail">—</div>
+        </div>
+        <div class="detail-row">
+          <div class="label">Дата реєстрації</div>
+          <div class="value" id="profileRegistered">—</div>
+        </div>
+        <div class="detail-row">
+          <div class="label">Роль</div>
+          <div class="value" id="profileRole">—</div>
+        </div>
+      </div> 
+    </aside>
+
+    <div id="messageModal" class="filter-modal" aria-hidden="true">
+      <div class="filter-modal-backdrop" data-close-message-modal></div>
+      <div class="filter-modal-panel" role="dialog" aria-modal="true" aria-labelledby="messageModalTitle">
+        <button id="messageModalClose" class="filter-modal-close" type="button" aria-label="Закрити">&times;</button>
+        <div class="filter-modal-header">
+          <h2 id="messageModalTitle">Надіслати повідомлення</h2>
+          <p>Напишіть коротке повідомлення користувачу.</p>
+        </div>
+        <form id="messageForm" class="message-form">
+          <textarea id="messageBody" placeholder="Текст повідомлення" rows="6" required></textarea>
+          <div id="messageFormMessage" class="form-message"></div>
+          <div class="message-modal-actions">
+            <button type="submit" class="btn btn-primary">Надіслати</button>
+            <button type="button" class="btn btn-secondary" id="cancelMessageBtn">Скасувати</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <section class="profile-section ratings-section">
+
+  <div class="ratings-top">
+
+    <div class="rating-overview">
+      <div class="rating-badge">
+        <span id="ratingAverage">4.8</span>
+        <small>/5</small>
+      </div>
+
+      <div class="rating-info">
+        <h3>Рейтинг користувача</h3>
+
+        <div class="rating-stars" id="ratingStars"></div>
+
+        <p class="rating-count" id="ratingCount">
+          24 відгуки
+        </p>
+      </div>
+    </div>
+
+    <form id="ratingForm" class="rating-form">
+
+      <div class="form-top">
+        <h4>Залишити відгук</h4>
+
+        <div class="stars-selector" id="starsSelector">
+          <button type="button" class="star-btn" data-value="1">★</button>
+          <button type="button" class="star-btn" data-value="2">★</button>
+          <button type="button" class="star-btn" data-value="3">★</button>
+          <button type="button" class="star-btn" data-value="4">★</button>
+          <button type="button" class="star-btn" data-value="5">★</button>
+        </div>
+
+        <input type="hidden" id="selectedRating" value="0">
+      </div>
+
+      <div class="rating-comment-wrapper">
+        <textarea
+          id="ratingComment"
+          placeholder="Поділіться враженнями..."
+          maxlength="500"
+        ></textarea>
+        <div class="comment-meta">
+          <span id="commentCharCount">0/500</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        Надіслати відгук
+      </button>
+
+      <p id="ratingFormMessage" class="form-message"></p>
+
+    </form>
+
+  </div>
+
+  <div class="reviews-section">
+
+    <div class="reviews-header">
+      <h4>Відгуки</h4>
+    </div>
+
+    <div id="reviewsList"></div>
+
+  </div>
+
+</section>
+
+    <section class="profile-main">
+      <div class="profile-section profile-bio">
+        <div id="profileBio"></div>
+      </div>
+
+      <div class="profile-section created-vacancies">
+        <h3>Створені вакансії</h3>
+        <div id="createdVacancies" class="jobs-grid"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="/scripts/session.js"></script>
+<script src="/scripts/profile.js"></script>
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+      <nav class="mobile-nav">
+        <a href="/dashboard#jobs-section">Вакансії</a>
+        <a href="/chat">Повідомлення</a>
+        <a href="/settings">Кабінет</a>
+      </nav>
+    </div>
+  <script src="/scripts/header-menu.js"></script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Чат | TeerHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/dashboard.css">
+  <link rel="stylesheet" href="/styles/chat.css">
+</head>
+<body>
+<header class="header">
+  <div class="container header-container">
+
+    <a href="/dashboard" class="logo">
+      TeerHub
+    </a>
+
+    <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="nav">
+      <a href="/dashboard#jobs-section">Вакансії</a>
+      <a href="/chat">Повідомлення</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/settings">Кабінет</a>
+    </div>
+
+    
+
+  </div>
+</header>
+<main class="chat-shell">
+  <div class="chat-grid">
+    <aside class="chat-sidebar">
+      <div class="sidebar-top">
+        <div>
+          <p class="eyebrow">Чати</p>
+          <h1>Контакти</h1>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <input id="conversationSearch" type="search" placeholder="Пошук чату або користувача" autocomplete="off" />
+      </div>
+
+      <div id="conversationList" class="conversation-list">
+        <div class="empty-state">Завантаження чатів...</div>
+      </div>
+    </aside>
+
+    <section class="chat-area">
+      <div class="chat-panel">
+        <div class="chat-header">
+          <button id="backToList" class="back-btn" type="button" aria-label="Повернутись до списку">←</button>
+          <div class="chat-title">
+            <p class="eyebrow">Розмова</p>
+            <h2 id="chatHeaderTitle">Оберіть чат</h2>
+          </div>
+        </div>
+
+        <div id="chatThread" class="chat-thread">
+          <div class="chat-empty-state">Оберіть чат зліва, щоб почати листування.</div>
+        </div>
+
+        <form id="chatReplyForm" class="chat-input-panel">
+          <div class="chat-input-row">
+            <textarea id="replyBody" rows="3" placeholder="Напишіть повідомлення..." disabled></textarea>
+            <button id="replySubmit" type="submit" class="send-btn" disabled aria-label="Відправити повідомлення">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M2 21L23 12L2 3L2 10L17 12L2 14L2 21Z" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+<script src="/scripts/session.js"></script>
+  <script src="/scripts/chat.js"></script>
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+      <nav class="mobile-nav">
+        <a href="/dashboard#jobs-section">Вакансії</a>
+        <a href="/chat">Повідомлення</a>
+        <a href="/settings">Кабінет</a>
+      </nav>
+    </div>
+  <script src="/scripts/header-menu.js"></script>

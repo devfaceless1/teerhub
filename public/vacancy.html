@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Вакансія | TeerHub</title>
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/dashboard.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="vacancy-page">
+  <header class="header">
+    <div class="container header-container">
+      <a href="/dashboard" class="logo">TeerHub</a>
+      <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <nav class="nav">
+        <a href="/dashboard#jobs-section">Вакансії</a>
+        <a href="/chat">Повідомлення</a>
+      </nav>
+      <div class="header-actions">
+        <a href="/settings">Кабінет</a>
+        <a href="/logout" id="logoutBtn" class="logout-btn">Вийти</a>
+      </div>
+      
+    </div>
+  </header>
+
+  <main class="container" style="padding:100px 20px 40px;">
+    <article class="job-card" id="vacancyCard">
+      <div class="job-card-top">
+        <div>
+          <h3 id="vacancyTitle">Завантаження…</h3>
+          <p class="company" id="vacancyOrg"></p>
+        </div>
+        <div class="card-right">
+          <span class="creator-badge" id="vacancyPosterRole"></span>
+        </div>
+      </div>
+
+      <p class="job-description" id="vacancyDesc"> </p>
+
+      <div class="job-contact" id="vacancyContact"></div>
+    
+    <section class="message-panel">
+      <h3>Написати повідомлення автору</h3>
+      <form id="messageForm">
+        <label>
+          <input id="msgSubject" type="text" placeholder="Тема" required />
+        </label>
+        <label>
+          <textarea id="msgBody" rows="5" placeholder="Ваше повідомлення" required></textarea>
+        </label>
+        <div style="margin-top:8px;">
+          <button type="submit" class="btn btn-primary">Надіслати повідомлення</button>
+        </div>
+        <p id="msgStatus" class="form-note"></p>
+      </form>
+    </section>
+    </article>
+  </main>
+
+  <script src="/scripts/session.js"></script>
+  <script src="/scripts/vacancy.js"></script>
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+    <nav class="mobile-nav">
+      <a href="/dashboard#jobs-section">Вакансії</a>
+      <a href="/chat">Повідомлення</a>
+      <a href="/settings">Кабінет</a>
+    </nav>
+    <a href="/logout" id="mobileLogoutBtn" class="logout-btn">Вийти</a>
+  </div>
+  <script src="/scripts/header-menu.js"></script>
+</body>
+</html>

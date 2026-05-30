@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TeerHub — Волонтерська платформа</title>
+
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container nav-container">
+
+    <a href="/" class="logo">TeerHub</a>
+
+    <button id="hamburgerBtn" class="hamburger" type="button" aria-label="Відкрити меню">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <nav class="nav">
+      <a href="#about">Про нас</a>
+      <a href="#features">Можливості</a>
+      <a href="#contact">Контакти</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="/login" class="nav-login">Увійти</a>
+      <a href="/register" class="btn btn-primary">Розпочати</a>
+    </div>
+
+    
+
+  </div>
+</header>
+
+<section class="hero">
+
+  <div class="container hero-container">
+
+    <div class="hero-content">
+
+      <h1>Волонтери та організації України</h1>
+
+      <p>
+        Створюйте волонтерські програми та знаходьте людей для допомоги.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="/register" class="btn btn-primary">Розпочати</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>500+</h3>
+          <span>Волонтерів</span>
+        </div>
+
+        <div class="stat-item">
+          <h3>120+</h3>
+          <span>Організацій</span>
+        </div>
+
+        <div class="stat-item">
+          <h3>35+</h3>
+          <span>Програм</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-card fade-up">
+      <h3>Активні програми</h3>
+
+      <div class="program-item">
+        <span>Допомога переселенцям</span>
+        <small>12 волонтерів потрібно</small>
+      </div>
+
+      <div class="program-item">
+        <span>Медична підтримка</span>
+        <small>8 волонтерів потрібно</small>
+      </div>
+
+      <div class="program-item">
+        <span>Освітня допомога</span>
+        <small>5 волонтерів потрібно</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="features" id="features">
+
+    <div class="container">
+
+        <h2 class="section-title">Можливості платформи</h2>
+
+        <div class="features-grid">
+
+            <!-- VOLUNTEERS -->
+            <div class="feature-card fade-up">
+                <h3>Для волонтерів</h3>
+                <p>Знаходь проєкти, які відповідають твоїм навичкам і часу.</p>
+
+                <ul>
+                    <li class="feature-item">✔ Швидкий пошук волонтерських програм</li>
+                    <li class="feature-item">✔ Подання заявки в один клік</li>
+                    <li class="feature-item">✔ Персональний профіль навичок</li>
+                    <li class="feature-item">✔ Історія участі в проєктах</li>
+                </ul>
+            </div>
+
+            <!-- ORGANIZATIONS -->
+            <div class="feature-card fade-up">
+                <h3>Для організацій</h3>
+                <p>Створюй програми та знаходь людей без зайвої бюрократії.</p>
+
+                <ul>
+                    <li class="feature-item">✔ Створення волонтерських програм</li>
+                    <li class="feature-item">✔ Управління заявками</li>
+                    <li class="feature-item">✔ Фільтрація кандидатів</li>
+                    <li class="feature-item">✔ Комунікація з волонтерами</li>
+                </ul>
+            </div>
+
+            <!-- PLATFORM -->
+            <div class="feature-card fade-up">
+                <h3>Платформа</h3>
+                <p>Система, яка об’єднує людей і організації в одному місці.</p>
+
+                <ul>
+                    <li class="feature-item">✔ Безпечна система обліку</li>
+                    <li class="feature-item">✔ Перевірені організації</li>
+                    <li class="feature-item">✔ Швидка реєстрація</li>
+                    <li class="feature-item">✔ Повна прозорість процесів</li>
+                </ul>
+            </div>
+
+            <!-- EXTRA CARD -->
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="about" id="about">
+    <div class="container about-container">
+
+        <div class="about-left fade-up">
+
+            <h2 class="section-title small">Про TeerHub</h2>
+
+            <p class="about-text">
+                TeerHub — це платформа, що з’єднує волонтерів і організації в Україні
+                для швидкої та ефективної співраці.
+            </p>
+
+            <p class="about-text">
+                Ми створюємо інструменти, які допомагають запускати волонтерські програми
+                без складної бюрократії.
+            </p>
+
+            <div class="about-stats">
+
+                <div class="about-stat">
+                    <h3>1000+</h3>
+                    <span>волонтерів</span>
+                </div>
+
+                <div class="about-stat">
+                    <h3>120+</h3>
+                    <span>організацій</span>
+                </div>
+
+                <div class="about-stat">
+                    <h3>35+</h3>
+                    <span>програм</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="about-right fade-up">
+
+    <div class="about-card">
+
+        <h3>Чому TeerHub?</h3>
+
+        <p class="about-subtext">
+            Ми не просто платформа — ми інструмент, який робить волонтерство простим і швидким.
+        </p>
+
+        <div class="why-grid">
+
+            <div class="why-item">
+                <div class="why-icon">⚡</div>
+                <div>
+                    <h4>Швидкість</h4>
+                    <p>Створення програми за 2 хвилини</p>
+                </div>
+            </div>
+
+            <div class="why-item">
+                <div class="why-icon">🤝</div>
+                <div>
+                    <h4>З’єднання</h4>
+                    <p>Волонтери і організації в одному місці</p>
+                </div>
+            </div>
+
+            <div class="why-item">
+                <div class="why-icon">🔎</div>
+                <div>
+                    <h4>Пошук</h4>
+                    <p>Підбір людей за навичками</p>
+                </div>
+            </div>
+
+            <div class="why-item">
+                <div class="why-icon">🛡️</div>
+                <div>
+                    <h4>Довіра</h4>
+                    <p>Перевірені організації та заявки</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    </div>
+</section>
+
+<section class="contact" id="contact">
+
+    <div class="container contact-wrapper">
+
+        <!-- LEFT SIDE -->
+        <div class="contact-info fade-up">
+
+            <h2 class="section-title small">Зв’яжіться з нами</h2>
+
+            <p class="contact-desc">
+                Маєш питання або хочеш створити волонтерську програму?
+                Напиши нам — ми відповідаємо протягом 24 годин.
+            </p>
+
+            <div class="contact-points">
+
+                <div class="point">
+                    <span>⚡</span>
+                    <p>Швидка відповідь</p>
+                </div>
+
+                <div class="point">
+                    <span>🤝</span>
+                    <p>Підтримка організацій</p>
+                </div>
+
+                <div class="point">
+                    <span>🔒</span>
+                    <p>Безпечна комунікація</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+        <div class="contact-form-card fade-up">
+
+            <h3>Написати повідомлення</h3>
+
+            <form>
+                <input type="text" placeholder="Ім’я" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Ваше повідомлення..." rows="6" required></textarea>
+
+                <button type="submit" class="btn btn-primary">
+                    Надіслати
+                </button>
+            </form>
+
+            <p class="form-note">
+                Ми не передаємо ваші дані третім сторонам.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="footer">
+  <div class="container footer-container">
+    <h3>TeerHub</h3>
+    <p>Платформа волонтерства</p>
+  </div>
+</footer>
+
+<script src="./scripts/session.js"></script>
+<script src="./scripts/main.js"></script>
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <button id="mobileMenuClose" class="mobile-menu-close" type="button" aria-label="Закрити меню">&times;</button>
+      <nav class="mobile-nav">
+        <a href="#about">Про нас</a>
+        <a href="#features">Можливості</a>
+        <a href="#contact">Контакти</a>
+      </nav>
+      <div class="mobile-actions">
+        <a href="/login" class="nav-login">Увійти</a>
+        <a href="/register" class="btn btn-primary">Розпочати</a>
+      </div>
+    </div>
+<script src="./scripts/header-menu.js"></script>
+
+</body>
+</html>

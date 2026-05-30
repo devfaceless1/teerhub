@@ -1,0 +1,30 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# npm
+package-lock.json
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+
+# Build
+dist/
+
+# Docker
+docker-compose.override.yml
+
+# Misc
+*.seed.json

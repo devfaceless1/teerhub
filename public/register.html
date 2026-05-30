@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Register | TeerHub</title>
+    <link rel="stylesheet" href="/styles/auth.css">
+  </head>
+  <body class="auth-page">
+    <main class="auth-card">
+      <h2>Реєстрація в TeerHub</h2>
+
+      <div class="step-indicator">
+        <div class="step active"><span class="step-number">1</span><span class="step-text">Тип</span></div>
+        <div class="step"><span class="step-number">2</span><span class="step-text">Дані</span></div>
+        <div class="step"><span class="step-number">3</span><span class="step-text">Готово</span></div>
+      </div>
+
+      <div class="step-page active" id="stepPage1">
+        <h3>Оберіть тип облікового запису</h3>
+        <p class="hint">Перший крок: визначте свій профіль.</p>
+
+        <label>
+          <input type="radio" name="role" value="volunteer" />
+          Волонтер
+        </label>
+        <label>
+          <input type="radio" name="role" value="organization" />
+          Організація / компанія
+        </label>
+
+        <button type="button" id="roleNextBtn">Продовжити</button>
+      </div>
+
+      <div class="step-page" id="stepPage2">
+        <h3>Введіть базові дані</h3>
+        <p class="hint" id="detailsHint">Ім'я, email, пароль та додаткові дані.</p>
+
+        <form id="detailsForm">
+          <input name="name" type="text" placeholder="Ім'я або назва" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Пароль" required />
+          <div class="password-guidance" id="passwordGuidance">
+            <p class="password-hint">Пароль має містити щонайменше:</p>
+            <ul class="password-requirements" id="passwordRequirements">
+              <li data-key="length"><span></span> 8 символів</li>
+              <li data-key="uppercase"><span></span> одну велику літеру</li>
+              <li data-key="lowercase"><span></span> одну малу літеру</li>
+              <li data-key="digit"><span></span> одну цифру</li>
+              <li data-key="symbol"><span></span> один спецсимвол</li>
+            </ul>
+          </div>
+          <input name="confirmPassword" type="password" placeholder="Підтвердіть пароль" required />
+          <p class="confirm-feedback" id="confirmFeedback"></p>
+          <input name="phone" type="tel" placeholder="Телефон (опційно)" />
+          <textarea name="motivation" placeholder="Трохи про вас або мету (опційно)"></textarea>
+
+          <div class="action-row">
+            <button type="button" class="step-back" data-back="0">Назад</button>
+            <button type="submit">Зареєструватись</button>
+          </div>
+        </form>
+      </div>
+      <div class="step-page" id="stepPage3">
+        <h3>Готово!</h3>
+        <p class="hint">Акаунт створено. Тепер ви можете увійти в систему.</p>
+        <div class="success-card">
+          <p>Ваш обліковий запис успішно зареєстровано.</p>
+        </div>
+        <button type="button" id="goLoginBtn">Перейти до входу</button>
+      </div>
+
+      <p class="auth-link">Вже маєте акаунт? <a href="/login">Увійти</a></p>
+    </main>
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="/scripts/auth.js?v=2"></script>
+  </body>
+</html>
